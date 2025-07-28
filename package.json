@@ -1,0 +1,65 @@
+{
+  "name": "nodesdr",
+  "version": "0.1.0",
+  "description": "Universal SDR library for Node.js with PlutoSDR/AD9361 support",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "types": "./lib/index.d.ts"
+    }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "build": "node-gyp rebuild && tsc",
+    "clean": "node-gyp clean && rimraf lib/",
+    "configure": "node-gyp configure",
+    "rebuild": "pnpm run clean && pnpm run build",
+    "install": "node-gyp rebuild",
+    "test": "node --test test/**/*.test.js",
+    "lint": "biome check src/ test/",
+    "prepack": "pnpm run build"
+  },
+  "keywords": [
+    "sdr",
+    "software-defined-radio",
+    "plutosdr",
+    "ad9361",
+    "radio",
+    "rf",
+    "dsp",
+    "native-addon",
+    "napi"
+  ],
+  "author": "Sushant S Samuel",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robosushie/nodesdr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/robosushie/nodesdr/issues"
+  },
+  "homepage": "https://github.com/robosushie/nodesdr#readme",
+  "dependencies": {
+    "node-addon-api": "^8.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.00.00",
+    "typescript": "^5.00.00",
+    "node-gyp": "^11.2.0",
+    "@biomejs/biome": "^2.0.0",
+    "rimraf": "^6.0.0"
+  },
+  "gypfile": true,
+  "binary": {
+    "napi_versions": [
+      9
+    ]
+  },
+  "packageManager": "pnpm@10.0.0"
+}
