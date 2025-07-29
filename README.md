@@ -27,19 +27,22 @@ pnpm add nodesdr
 #### Platform-specific requirements:
 
 **Windows:**
+
 - Visual Studio Build Tools or Visual Studio Community
 
 **Linux:**
+
 - build-essential package
 - libusb-1.0-dev (for PlutoSDR support)
 
 **macOS:**
+
 - Xcode Command Line Tools
 
 ## Quick Start
 
 ```typescript
-import { PlutoSDR, SampleFormat } from 'nodesdr';
+import { PlutoSDR, SampleFormat } from "nodesdr";
 
 // Initialize PlutoSDR
 const sdr = new PlutoSDR();
@@ -51,7 +54,7 @@ await sdr.setCenterFrequency(100e6);
 await sdr.setGain(30);
 
 // Start receiving samples
-sdr.on('samples', (samples: Float32Array) => {
+sdr.on("samples", (samples: Float32Array) => {
   console.log(`Received ${samples.length} samples`);
 });
 
@@ -67,6 +70,7 @@ await sdr.disconnect();
 ### PlutoSDR Class
 
 #### Constructor
+
 ```typescript
 const sdr = new PlutoSDR(options?: PlutoSDROptions);
 ```
@@ -74,11 +78,13 @@ const sdr = new PlutoSDR(options?: PlutoSDROptions);
 #### Methods
 
 ##### Connection Management
+
 - `connect(uri?: string): Promise<void>` - Connect to PlutoSDR device
 - `disconnect(): Promise<void>` - Disconnect from device
 - `isConnected(): boolean` - Check connection status
 
 ##### Configuration
+
 - `setSampleRate(rate: number): Promise<void>` - Set sample rate in Hz
 - `getSampleRate(): Promise<number>` - Get current sample rate
 - `setCenterFrequency(freq: number): Promise<void>` - Set center frequency in Hz
@@ -87,12 +93,14 @@ const sdr = new PlutoSDR(options?: PlutoSDROptions);
 - `getGain(): Promise<number>` - Get current gain
 
 ##### Data Streaming
+
 - `startRx(): Promise<void>` - Start receiving samples
 - `stopRx(): Promise<void>` - Stop receiving samples
 - `startTx(): Promise<void>` - Start transmitting samples
 - `stopTx(): Promise<void>` - Stop transmitting samples
 
 #### Events
+
 - `samples` - Emitted when new samples are available
 - `error` - Emitted on errors
 - `connected` - Emitted when device connects
@@ -123,6 +131,55 @@ pnpm run build
 pnpm test
 ```
 
+## Cross-Platform Native Build & Prebuilds
+
+NodeSDR uses [node-gyp-build](https://github.com/prebuild/node-gyp-build) and [prebuildify](https://github.com/prebuild/prebuildify) for cross-platform native binary distribution and runtime selection.
+
+### Development Workflow
+
+- **Build native addon & TypeScript:**
+  ```sh
+  pnpm run build
+  ```
+- **Clean build outputs:**
+  ```sh
+  pnpm run clean
+  ```
+- **Configure build:**
+  ```sh
+  pnpm run configure
+  ```
+- **Run tests:**
+  ```sh
+  pnpm test
+  ```
+- **Lint code:**
+  ```sh
+  pnpm run lint
+  ```
+
+### Prebuilds for Distribution
+
+- **Generate prebuilds for current platform:**
+  ```sh
+  pnpm run prebuild
+  ```
+- **Generate prebuilds for all major platforms/architectures:**
+  ```sh
+  pnpm run prebuild:all
+  ```
+- Prebuilt binaries are stored in the `prebuilds/` directory and bundled for npm distribution.
+
+### Runtime Binary Selection
+
+- At runtime, NodeSDR loads the correct native binary using `node-gyp-build`.
+- No manual platform detection is needed; the loader auto-selects the right binary.
+
+### TypeScript Support
+
+- TypeScript sources are compiled to `lib/`.
+- Type definitions are generated automatically and published with the package.
+
 ## Development
 
 ```bash
@@ -142,11 +199,11 @@ pnpm run clean
 NodeSDR is designed with a plugin architecture to support multiple SDR platforms:
 
 ```typescript
-import { registerPlugin } from 'nodesdr';
-import { MyCustomSDR } from './my-custom-sdr-plugin';
+import { registerPlugin } from "nodesdr";
+import { MyCustomSDR } from "./my-custom-sdr-plugin";
 
 // Register custom SDR plugin
-registerPlugin('MyCustomSDR', MyCustomSDR);
+registerPlugin("MyCustomSDR", MyCustomSDR);
 
 // Use custom SDR
 const sdr = new MyCustomSDR();
@@ -154,12 +211,12 @@ const sdr = new MyCustomSDR();
 
 ## Supported Platforms
 
-| Platform | Status | Notes |
-|----------|--------|-------|
+| Platform        | Status       | Notes                   |
+| --------------- | ------------ | ----------------------- |
 | PlutoSDR/AD9361 | ✅ Supported | Primary target platform |
-| RTL-SDR | 🚧 Planned | Future release |
-| HackRF | 🚧 Planned | Future release |
-| BladeRF | 🚧 Planned | Future release |
+| RTL-SDR         | 🚧 Planned   | Future release          |
+| HackRF          | 🚧 Planned   | Future release          |
+| BladeRF         | 🚧 Planned   | Future release          |
 
 ## Contributing
 

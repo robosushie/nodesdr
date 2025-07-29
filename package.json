@@ -22,7 +22,8 @@
     "install": "node-gyp rebuild",
     "test": "node --test test/**/*.test.js",
     "lint": "biome check src/ test/",
-    "prepack": "pnpm run build"
+    "prepack": "pnpm run build",
+    "preinstall": "node scripts/check-deps.js"
   },
   "keywords": [
     "sdr",
